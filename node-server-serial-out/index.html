@@ -1,0 +1,39 @@
+<html>
+<head>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+        <style type="text/css">
+                body{margin:0px, padding:0px;}
+                #bg{background-color: blue; position:absolute; left:0px; top:0px; height: 100%; width=0px;}}
+        </style>
+</head>
+<body>
+
+        <div id="bg"></div>
+
+
+        <script type="text/javascript">
+                // Socket.io port
+                var url = 'http://myPublicIP:Port';
+                var socket = io.connect(url);
+
+                function map(value, inputMin, inputMax, outputMin, outputMax){
+                        outVal = ((value - inputMin) / (inputMax - inputMin) * (outputMax - outputMin) + outputMin);
+                        if(outVal >  outputMax){
+                                outVal = outputMax;
+                        }
+                        if(outVal < outputMin){
+                                outVal = outputMin;
+                        }       
+                        return outVal;
+                }
+
+                $(document).mousemove(function(event) {
+                        value = parseInt(map(event.pageX, 0, window.innerWidth, 0, 255));
+                        socket.emit('MOVE', value );
+                        $('#bg').css('width', event.pageX+"px");
+                });
+        </script>
+
+</body>
+</html>

@@ -1,0 +1,32 @@
+<html>
+<head>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"><$
+        <script src="/socket.io/socket.io.js"></script>
+        <style type="text/css">
+                button{font-size: 300px;}
+        </style>
+</head>
+<body>
+
+        <button>OFF</button>
+
+
+        <script type="text/javascript">
+                // Socket.io port
+                var url = 'http://myPublicIP:myPublicPort';
+                var socket = io.connect(url);
+
+                $('button').click(function(){
+                        if( $(this).html() == "OFF" ){
+                                $(this).html("ON");
+                                socket.emit('ON', 'null');
+                        }else if( $(this).html() == "ON" ){
+                                $(this).html("OFF");
+                                socket.emit('OFF', 'null');
+                        }
+                });
+        </script>
+
+</body>
+</html>
+
